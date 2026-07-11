@@ -9,7 +9,6 @@ export default function AdminLogin() {
       portal="admin"
       alreadyAuthed={isAdminAuthed}
       onSubmit={loginAdmin}
-      hint="Demo admin — admin@gmail.com / password"
     />
   );
 }
