@@ -67,7 +67,13 @@ export default function Smtp() {
       title: 'Status', render: (_, r) => (
         <Space direction="vertical" size={2}>
           <Tag color={r.status === 'active' ? 'success' : 'default'} style={{ textTransform: 'capitalize' }}>{r.status}</Tag>
-          {r.auto_disabled && <Tag color="error">auto-disabled</Tag>}
+          {r.auto_disabled && (
+            <Tooltip title={r.disabled_reason}>
+              <Tag color={r.disabled_until ? 'warning' : 'error'}>
+                {r.disabled_until ? `parked · retry ${fromNow(r.disabled_until)}` : 'auto-disabled'}
+              </Tag>
+            </Tooltip>
+          )}
         </Space>
       ),
     },
@@ -150,8 +156,12 @@ export default function Smtp() {
       {disabled.length > 0 && (
         <Alert
           type="warning" showIcon style={{ marginBottom: 16 }}
-          message={`${disabled.length} SMTP account(s) were auto-disabled after a blocked/bounce was detected in the sender inbox.`}
-          description={disabled.map((s) => <div key={s.id}>• <b>{s.from_email}</b> — {s.disabled_reason}</div>)}
+          message={`${disabled.length} SMTP account(s) auto-disabled after being blocked/rate-limited by the provider. Rate-limited accounts re-enable automatically once their cooldown elapses.`}
+          description={disabled.map((s) => (
+            <div key={s.id}>• <b>{s.from_email}</b> — {s.disabled_reason}
+              {s.disabled_until ? ` (auto-retry ${fromNow(s.disabled_until)})` : ' (manual re-enable required)'}
+            </div>
+          ))}
         />
       )}
 

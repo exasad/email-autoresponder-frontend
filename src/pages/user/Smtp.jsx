@@ -51,7 +51,21 @@ export default function Smtp() {
 
   const columns = [
     { title: 'Sender', render: (_, r) => <div><div style={{ fontWeight: 600 }}>{r.from_email || r.username}</div><div style={{ fontSize: 12, opacity: 0.6 }}>{r.host}:{r.port} · {r.encryption.toUpperCase()}</div></div> },
-    { title: 'Status', dataIndex: 'status', render: (s) => <Tag color={s === 'active' ? 'success' : 'default'}>{s}</Tag> },
+    {
+      title: 'Status', dataIndex: 'status',
+      render: (s, r) => (
+        <Space direction="vertical" size={2}>
+          <Tag color={s === 'active' ? 'success' : 'default'}>{s}</Tag>
+          {r.auto_disabled && (
+            <Tooltip title={r.disabled_reason}>
+              <Tag color={r.disabled_until ? 'warning' : 'error'}>
+                {r.disabled_until ? `parked · retry ${fromNow(r.disabled_until)}` : 'auto-disabled'}
+              </Tag>
+            </Tooltip>
+          )}
+        </Space>
+      ),
+    },
     { title: 'Connection', dataIndex: 'connection_status', render: (c, r) => <Tooltip title={r.last_error || ''}><Tag color={CONN[c]}>{c}</Tag></Tooltip> },
     { title: 'Last tested', dataIndex: 'last_tested_at', render: (v) => v ? fromNow(v) : 'never' },
     {
