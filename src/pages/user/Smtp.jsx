@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Table, Button, Space, Tag, Card, Modal, Form, Input, InputNumber, Select, App, Tooltip, Dropdown, Alert, Row, Col,
+  Table, Button, Space, Tag, Card, Modal, Form, Input, InputNumber, Select, App, Tooltip, Dropdown, Alert, Row, Col, Popconfirm,
 } from 'antd';
 import {
   PlusOutlined, ThunderboltOutlined, MoreOutlined, EditOutlined, DeleteOutlined, ImportOutlined,
@@ -18,6 +18,7 @@ export default function Smtp() {
   const qc = useQueryClient();
   const [editing, setEditing] = useState(null);
   const [importOpen, setImportOpen] = useState(false);
+  const [selected, setSelected] = useState([]);
   const [form] = Form.useForm();
 
   const { data, isFetching } = useQuery({
@@ -35,6 +36,11 @@ export default function Smtp() {
   const testMut = useMutation({
     mutationFn: (id) => userApi.post(`/smtp/${id}/test`),
     onSuccess: ({ data: r }) => { r.data.ok ? message.success(r.data.message) : message.error(r.data.message); invalidate(); },
+    onError: (e) => message.error(e.apiMessage),
+  });
+  const bulkMut = useMutation({
+    mutationFn: (payload) => userApi.post('/smtp/bulk', payload),
+    onSuccess: ({ data: r }) => { message.success(`Applied to ${r.data.affected} account(s)`); setSelected([]); invalidate(); },
     onError: (e) => message.error(e.apiMessage),
   });
 
@@ -89,7 +95,23 @@ export default function Smtp() {
       />
 
       <Card bordered={false}>
-        <Table rowKey="id" loading={isFetching} columns={columns} dataSource={data || []} scroll={{ x: 640 }} pagination={false} />
+        {selected.length > 0 && (
+          <div style={{ marginBottom: 12, padding: '8px 12px', background: 'var(--ant-color-fill-quaternary)', borderRadius: 8, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+            <span>{selected.length} selected</span>
+            <Select size="small" placeholder="Set status" style={{ width: 150 }}
+              options={[{ value: 'active', label: 'Active' }, { value: 'inactive', label: 'Inactive' }]}
+              onChange={(value) => bulkMut.mutate({ ids: selected, action: 'status', value })} />
+            <Popconfirm title={`Delete ${selected.length} SMTP account(s)?`} okType="danger"
+              onConfirm={() => bulkMut.mutate({ ids: selected, action: 'delete' })}>
+              <Button size="small" danger icon={<DeleteOutlined />}>Delete</Button>
+            </Popconfirm>
+            <Button size="small" type="text" onClick={() => setSelected([])}>Clear</Button>
+          </div>
+        )}
+        <Table
+          rowKey="id" loading={isFetching} columns={columns} dataSource={data || []} scroll={{ x: 640 }} pagination={false}
+          rowSelection={{ selectedRowKeys: selected, onChange: setSelected }}
+        />
       </Card>
 
       <Modal
