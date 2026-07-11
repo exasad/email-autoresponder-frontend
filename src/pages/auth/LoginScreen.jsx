@@ -90,14 +90,13 @@ export default function LoginScreen({ portal, alreadyAuthed, onSubmit, hint }) {
             />
           )}
 
-          <div style={{ marginTop: 20, textAlign: 'center' }}>
-            <Text type="secondary" style={{ fontSize: 13 }}>
-              {isAdmin ? 'Not an admin? ' : 'Are you an administrator? '}
-              <Link to={isAdmin ? '/user/login' : '/admin/login'}>
-                {isAdmin ? 'User login' : 'Admin login'}
-              </Link>
-            </Text>
-          </div>
+          {isAdmin && (
+            <div style={{ marginTop: 20, textAlign: 'center' }}>
+              <Text type="secondary" style={{ fontSize: 13 }}>
+                Not an admin? <Link to="/user/login">User login</Link>
+              </Text>
+            </div>
+          )}
         </Card>
       </div>
     </div>

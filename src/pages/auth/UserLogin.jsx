@@ -9,7 +9,6 @@ export default function UserLogin() {
       portal="user"
       alreadyAuthed={isUserAuthed}
       onSubmit={loginUser}
-      hint="Demo user — demo@back2back.io / User@12345"
     />
   );
 }
