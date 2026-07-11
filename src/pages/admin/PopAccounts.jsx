@@ -24,6 +24,11 @@ export default function PopAccounts() {
     queryFn: async () => (await adminApi.get('/pop-accounts', { params })).data,
   });
 
+  const { data: campaigns } = useQuery({
+    queryKey: ['admin', 'campaigns', 'picker'],
+    queryFn: async () => (await adminApi.get('/campaigns', { params: { limit: 200 } })).data.data,
+  });
+
   const invalidate = () => qc.invalidateQueries({ queryKey: ['admin', 'pop-accounts'] });
 
   const saveMut = useMutation({
@@ -49,6 +54,7 @@ export default function PopAccounts() {
 
   const columns = [
     { title: 'Mailbox', render: (_, r) => <div><div style={{ fontWeight: 600 }}>{r.label || r.username}</div><div style={{ fontSize: 12, opacity: 0.6 }}>{r.username}</div></div> },
+    { title: 'Campaign', render: (_, r) => (r.campaign ? <Tag color="blue">{r.campaign.campaign_name}</Tag> : <Tag>unassigned</Tag>) },
     { title: 'Host', render: (_, r) => <span style={{ fontSize: 12 }}>{r.host}:{r.port} · {r.encryption.toUpperCase()}</span> },
     { title: 'Status', dataIndex: 'status', render: (s) => <Tag color={s === 'active' ? 'success' : 'default'}>{s}</Tag> },
     { title: 'Connection', dataIndex: 'connection_status', render: (c, r) => <Tooltip title={r.last_error || ''}><Tag color={CONN[c]}>{c}</Tag></Tooltip> },
@@ -101,6 +107,11 @@ export default function PopAccounts() {
         style={{ maxWidth: 'calc(100vw - 16px)' }}
       >
         <Form form={form} layout="vertical" onFinish={(v) => saveMut.mutate({ ...v, id: editing?.id })} style={{ marginTop: 12 }}>
+          <Form.Item name="campaign_id" label="Campaign" rules={[{ required: true, message: 'Select the campaign this mailbox belongs to' }]}
+            tooltip="Each campaign has exactly one POP mailbox (and one mother mail) for lead replies.">
+            <Select showSearch optionFilterProp="label" placeholder="Select campaign"
+              options={(campaigns || []).map((c) => ({ value: c.id, label: c.campaign_name }))} />
+          </Form.Item>
           <Form.Item name="label" label="Label"><Input placeholder="e.g. Sales replies" /></Form.Item>
           <Row gutter={12}>
             <Col xs={24} sm={16}>
