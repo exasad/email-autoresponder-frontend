@@ -7,6 +7,11 @@ import axios from 'axios';
  */
 const SESSION_KEYS = { admin: 'b2b.admin.session', user: 'b2b.user.session' };
 
+// In dev this is empty → relative "/api" via the Vite proxy. In production the
+// build sets VITE_API_URL (e.g. https://backend.securemail.ltd) so the SPA on
+// securemail.ltd calls the backend subdomain.
+const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+
 export function readSession(portal) {
   try {
     return JSON.parse(localStorage.getItem(SESSION_KEYS[portal]) || 'null');
@@ -23,7 +28,7 @@ export function writeSession(portal, session) {
 
 function createApi(portal) {
   const instance = axios.create({
-    baseURL: `/api/${portal}`,
+    baseURL: `${API_BASE}/api/${portal}`,
     timeout: 30_000,
   });
 
