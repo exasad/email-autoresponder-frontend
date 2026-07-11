@@ -97,7 +97,7 @@ export default function PopAccounts() {
       <Modal
         open={editing !== null} title={editing?.id ? 'Edit POP account' : 'Add POP account'}
         onCancel={() => { setEditing(null); form.resetFields(); }} onOk={() => form.submit()}
-        confirmLoading={saveMut.isPending} okText="Save" destroyOnClose width={560}
+        confirmLoading={saveMut.isPending} okText="Save" destroyOnClose width={720}
         style={{ maxWidth: 'calc(100vw - 16px)' }}
       >
         <Form form={form} layout="vertical" onFinish={(v) => saveMut.mutate({ ...v, id: editing?.id })} style={{ marginTop: 12 }}>

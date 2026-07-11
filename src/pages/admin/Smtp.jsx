@@ -188,7 +188,7 @@ export default function Smtp() {
         confirmLoading={saveMut.isPending}
         okText="Save"
         destroyOnClose
-        width={680}
+        width={720}
         style={{ maxWidth: 'calc(100vw - 16px)' }}
       >
         <Form form={form} layout="vertical" onFinish={(v) => saveMut.mutate({ ...v, id: editing?.id })} style={{ marginTop: 12 }}>

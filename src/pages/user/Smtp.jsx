@@ -95,7 +95,7 @@ export default function Smtp() {
       <Modal
         open={editing !== null} title={editing?.id ? 'Edit SMTP' : 'Add SMTP'}
         onCancel={() => { setEditing(null); form.resetFields(); }} onOk={() => form.submit()}
-        confirmLoading={saveMut.isPending} okText="Save" destroyOnClose width={680}
+        confirmLoading={saveMut.isPending} okText="Save" destroyOnClose width={720}
         style={{ maxWidth: 'calc(100vw - 16px)' }}
       >
         <Form form={form} layout="vertical" onFinish={(v) => saveMut.mutate({ ...v, id: editing?.id })} style={{ marginTop: 12 }}>
