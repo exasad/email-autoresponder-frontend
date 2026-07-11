@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   DashboardOutlined, RocketOutlined, ContactsOutlined, UserOutlined,
-  MailOutlined, MessageOutlined, RetweetOutlined, SendOutlined,
+  MailOutlined, MessageOutlined, RetweetOutlined, SendOutlined, HistoryOutlined,
 } from '@ant-design/icons';
 import AppShell from './AppShell';
 import { userApi } from '../api/client';
@@ -15,6 +15,7 @@ const NAV = [
   { key: '/user/followups', label: 'Follow-ups', icon: <RetweetOutlined /> },
   { key: '/user/smtp', label: 'My SMTP', icon: <SendOutlined /> },
   { key: '/user/leads', label: 'Leads', icon: <ContactsOutlined /> },
+  { key: '/user/lead-logs', label: 'Lead Logs', icon: <HistoryOutlined /> },
   { key: '/user/profile', label: 'My Profile', icon: <UserOutlined /> },
 ];
 

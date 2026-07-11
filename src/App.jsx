@@ -26,6 +26,7 @@ import RepliesPage from './pages/user/RepliesPage';
 import FollowupsPage from './pages/user/FollowupsPage';
 import UserSmtp from './pages/user/Smtp';
 import Leads from './pages/user/Leads';
+import LeadLogs from './pages/user/LeadLogs';
 import UserProfile from './pages/user/UserProfile';
 
 import NotFound from './pages/NotFound';
@@ -62,6 +63,7 @@ export default function App() {
         <Route path="followups" element={<FollowupsPage />} />
         <Route path="smtp" element={<UserSmtp />} />
         <Route path="leads" element={<Leads />} />
+        <Route path="lead-logs" element={<LeadLogs />} />
         <Route path="profile" element={<UserProfile />} />
       </Route>
 
