@@ -23,7 +23,7 @@ export default function UserLayout() {
   return (
     <AppShell
       portal="user"
-      brand="Back2Back"
+      brand="SecureMail"
       nav={NAV}
       api={userApi}
       profile={user?.profile}

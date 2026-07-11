@@ -41,7 +41,7 @@ export default function LoginScreen({ portal, alreadyAuthed, onSubmit, hint }) {
     <div className="auth-shell">
       <div className="auth-hero">
         <div className="auth-hero__brand">
-          <span className="b2b-logo__mark">B2</span> Back2Back
+          <img src="/logo-mark.svg" alt="SecureMail" width={36} height={36} style={{ borderRadius: 9 }} /> SecureMail
         </div>
         <div>
           <div className="auth-hero__headline">

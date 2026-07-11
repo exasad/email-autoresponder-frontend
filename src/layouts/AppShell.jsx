@@ -45,7 +45,7 @@ export default function AppShell({ portal, brand, nav, api, profile, onLogout })
 
   const logo = (
     <div className="b2b-logo" style={{ padding: '18px 16px' }}>
-      <span className="b2b-logo__mark">B2</span>
+      <img src="/logo-mark.svg" alt={brand} width={34} height={34} style={{ borderRadius: 9, display: 'block' }} />
       {!collapsed && <span>{brand}</span>}
     </div>
   );
@@ -88,7 +88,7 @@ export default function AppShell({ portal, brand, nav, api, profile, onLogout })
           placement="left"
           width={260}
           styles={{ body: { padding: 0 } }}
-          title={<div className="b2b-logo"><span className="b2b-logo__mark">B2</span>{brand}</div>}
+          title={<div className="b2b-logo"><img src="/logo-mark.svg" alt={brand} width={30} height={30} style={{ borderRadius: 8 }} />{brand}</div>}
         >
           {menu}
         </Drawer>

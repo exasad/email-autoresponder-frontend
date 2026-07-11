@@ -24,7 +24,7 @@ export default function AdminLayout() {
   return (
     <AppShell
       portal="admin"
-      brand="Back2Back"
+      brand="SecureMail"
       nav={NAV}
       api={adminApi}
       profile={admin?.profile}
