@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Table, Card, Tag, Space, Select, Input, Avatar, Typography } from 'antd';
 import {
   SearchOutlined, InboxOutlined, MessageOutlined, SendOutlined, RetweetOutlined,
-  ClockCircleOutlined, SwapOutlined, FileTextOutlined,
+  ClockCircleOutlined, SwapOutlined, FileTextOutlined, ExclamationCircleOutlined,
 } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import PageHeader from '../../components/PageHeader';
@@ -17,6 +17,7 @@ const EVENTS = {
   message_sent: { label: 'Reply sent', color: 'green', icon: <SendOutlined /> },
   followup_sent: { label: 'Follow-up sent', color: 'purple', icon: <RetweetOutlined /> },
   queued: { label: 'Added to waiting list', color: 'cyan', icon: <ClockCircleOutlined /> },
+  send_failed: { label: 'Send failed (retrying SMTP)', color: 'red', icon: <ExclamationCircleOutlined /> },
   status_changed: { label: 'Status changed', color: 'orange', icon: <SwapOutlined /> },
   note: { label: 'Note', color: 'default', icon: <FileTextOutlined /> },
 };
