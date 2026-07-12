@@ -6,6 +6,7 @@ import {
 import AppShell from './AppShell';
 import { adminApi } from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import { useRealtime } from '../lib/realtime';
 
 const NAV = [
   { key: '/admin', label: 'Dashboard', icon: <DashboardOutlined /> },
@@ -21,6 +22,7 @@ const NAV = [
 
 export default function AdminLayout() {
   const { admin, logoutAdmin } = useAuth();
+  useRealtime('admin');
   return (
     <AppShell
       portal="admin"

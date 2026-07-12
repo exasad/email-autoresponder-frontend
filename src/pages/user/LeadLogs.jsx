@@ -58,8 +58,11 @@ export default function LeadLogs() {
     { title: 'Campaign', render: (_, r) => r.campaign?.campaign_name || '—' },
     { title: 'Detail', dataIndex: 'description', render: (v) => <span style={{ fontSize: 13 }}>{v || '—'}</span> },
     {
-      title: 'When', dataIndex: 'created_at', width: 150,
-      render: (v) => <Typography.Text type="secondary" title={dateTime(v)}>{fromNow(v)}</Typography.Text>,
+      title: 'When', width: 160,
+      render: (_, r) => {
+        const v = r.createdAt || r.created_at;
+        return <Typography.Text type="secondary" title={dateTime(v)}>{fromNow(v)}</Typography.Text>;
+      },
     },
   ];
 
